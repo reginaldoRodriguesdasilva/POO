@@ -5,16 +5,34 @@ abstract class conta
     public $tipoConta;
     public $agencia;
     public $nunConta;
-    public $saldo = 0;
+    protected $saldo = 0;
 
 
     public function deposito($valor)
     {
-        $this-> saldo += $valor;       
+        //$this-> saldo += $valor;   
+        if ($valor <= 0) 
+        {
+            echo 'Depósito invalido!!! <br>';
+        }   
+        else{
+            $this-> saldo +=$valor;
+            echo 'Depósito realizado com sucesso!! <br>';
+            
+        }
     }
     public function saque($valor)
     {
-        $this-> saldo -= $valor;
+        //$this-> saldo -= $valor;
+        if( $this-> saldo >= $valor)
+        {
+            $this-> saldo -= $valor;
+            echo ' Saque realizado com sucesso ';
+        }
+        else
+        {
+           echo ' Saldo insuficiente!!! <br>';
+        }
     }
     public function imprimeExtrato()
     {
@@ -63,8 +81,10 @@ class especial extends conta
 }
 
 $ctaPoup = new poupanca ( '0002-7', '85588-88', 0.54);
-$ctaPoup-> deposito(1500);
-$ctaPoup-> deposito(1500);
+//$ctaPoup-> saque = - 1500;
+// Não pode acessar atributo protegido
+$ctaPoup-> deposito ( -1500);
+$ctaPoup-> saque (3000);
 $ctaPoup-> imprimeExtrato();
 
 echo'<hr>';

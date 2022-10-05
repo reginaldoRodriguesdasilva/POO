@@ -6,7 +6,7 @@ class Forma
 	
 	public function imprimeForma()
 	{
-		echo $this->tipoDeForma;
+		echo $this-> tipoDeForma;
 	}
 
 }

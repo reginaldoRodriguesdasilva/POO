@@ -2,19 +2,44 @@
 
 abstract class conta 
 {
-    public $tipoConta;
+    private $tipoConta;
+    public function getTipoConta(){
+        return $this-> tipoConta;
+    }
+    public function setTipoConta(string $tipoConta){
+        $this-> tipoConta = $tipoConta;
+    }
+
     public $agencia;
     public $nunConta;
-    public $saldo = 0;
+    protected $saldo = 0;
 
 
     public function deposito($valor)
     {
-        $this-> saldo += $valor;       
+        //$this-> saldo += $valor;   
+        if ($valor <= 0) 
+        {
+            echo 'Depósito invalido!!! <br>';
+        }   
+        else{
+            $this-> saldo +=$valor;
+            echo 'Depósito realizado com sucesso!! <br>';
+            
+        }
     }
     public function saque($valor)
     {
-        $this-> saldo -= $valor;
+        //$this-> saldo -= $valor;
+        if( $this-> saldo >= $valor)
+        {
+            $this-> saldo -= $valor;
+            echo ' Saque realizado com sucesso ';
+        }
+        else
+        {
+           echo ' Saldo insuficiente!!! <br>';
+        }
     }
     public function imprimeExtrato()
     {
@@ -31,7 +56,7 @@ class poupanca extends conta
 
     public function __construct (string $agencia, string $nunConta, string $reajuste)
     {
-        $this-> tipoConta = 'poupança';
+        $this-> setTipoConta  ('poupança');
         $this-> agencia = $agencia;
         $this-> nunConta = $nunConta;
         $this-> reajuste = $reajuste;
@@ -50,7 +75,7 @@ class especial extends conta
 
     public function __construct (string $agencia, string $nunConta, string $saldoEspecial)
     {
-        $this-> tipoConta = 'especial';
+        $this-> setTipoConta  ('especial');
         $this-> agencia = $agencia;
         $this-> nunConta = $nunConta;
         $this-> saldoEspecial = $saldoEspecial;
@@ -63,8 +88,10 @@ class especial extends conta
 }
 
 $ctaPoup = new poupanca ( '0002-7', '85588-88', 0.54);
-$ctaPoup-> deposito(1500);
-$ctaPoup-> deposito(1500);
+//$ctaPoup-> saque = - 1500;
+// Não pode acessar atributo protegido
+$ctaPoup-> deposito ( -1500);
+$ctaPoup-> saque (3000);
 $ctaPoup-> imprimeExtrato();
 
 echo'<hr>';
